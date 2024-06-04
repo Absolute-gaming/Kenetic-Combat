@@ -9,6 +9,7 @@ func _ready():
 		spawn(1)
 		multiplayer.peer_connected.connect(spawn)
 		multiplayer.peer_disconnected.connect(removePlayer)
+		print("is_multiplayer_authority:",is_multiplayer_authority())
 
 var players = {}
 
@@ -18,7 +19,9 @@ func spawnPlayer(data):
 	p.set_multiplayer_authority(data)
 	players[data] = p
 	return p
+	print("spawnPlayer", data)
 
 func removePlayer(data):
 	players[data].queue_free()
 	players.erase(data)
+	print("removePlayer", data)

@@ -7,6 +7,13 @@ extends CharacterBody3D
 @onready var crouching_collider = $"Crouching Collider"
 @onready var on_floor_cast = $OnFloorCast
 @onready var head_crouch_cast = $HeadCrouchCast
+@onready var shoot_cd = $ShootCD
+
+@onready var tip = $Head/Weapon/Tip
+@onready var weapon_ray_cast_3d = $Head/Weapon/Tip/WeaponRayCast3D
+var projectile = load("res://Scenes/projectile.tscn")
+var instance
+
 
 #Speed Vars
 var current_speed = 5.0
@@ -23,6 +30,9 @@ var lerp_speed = 20
 var direction = Vector3.ZERO
 var mouse_sens = 0.2
 
+#Combat Vars
+var can_shoot = true
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -38,6 +48,9 @@ func _input(event):
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sens))
 		head.rotate_x(deg_to_rad(-event.relative.y * mouse_sens))
 		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89.9), deg_to_rad(89.9))
+	
+	#Handle Combat
+	
 
 func _physics_process(delta):
 	if !is_multiplayer_authority():
@@ -81,3 +94,8 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, current_speed)
 
 	move_and_slide()
+
+
+func _on_shoot_cd_timeout():
+	can_shoot = true
+	print("Can Shoot")

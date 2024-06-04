@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bf64jvmkxqfra"]
+[gd_scene load_steps=3 format=3 uid="uid://bf64jvmkxqfra"]
 
 [ext_resource type="Script" path="res://Scenes/Main.gd" id="1_igr0y"]
+[ext_resource type="PackedScene" uid="uid://ck5cu122muboe" path="res://Scenes/Steam.tscn" id="2_ywio3"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_igr0y")
@@ -27,6 +28,8 @@ offset_top = 58.0
 offset_right = 196.0
 offset_bottom = 116.0
 text = "Refresh"
+
+[node name="Steam" parent="." instance=ExtResource("2_ywio3")]
 
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Refresh" to="." method="_on_refresh_pressed"]

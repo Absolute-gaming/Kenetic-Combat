@@ -11,11 +11,12 @@ func _ready():
 	peer.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	open_lobby_list()
+	print("isSteamRunning", Steam.isSteamRunning())
 
 func spawn_level(data):
 	var a = (load(data) as PackedScene).instantiate()
-	return a
 	print("spawn_level")
+	return a
 
 func _on_host_pressed():
 	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
