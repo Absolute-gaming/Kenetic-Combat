@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck5cu122muboe"]
+
+[ext_resource type="Script" path="res://Scenes/Steam.gd" id="1_ndmyp"]
+
+[node name="Steam" type="Node"]
+script = ExtResource("1_ndmyp")
