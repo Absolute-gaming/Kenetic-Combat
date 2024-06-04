@@ -6,6 +6,7 @@ var peer = SteamMultiplayerPeer.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("ready")
 	multiplayer_spawner.spawn_function = spawn_level
 	peer.lobby_created.connect(_on_lobby_created)
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
@@ -14,6 +15,7 @@ func _ready():
 func spawn_level(data):
 	var a = (load(data) as PackedScene).instantiate()
 	return a
+	print("spawn_level")
 
 func _on_host_pressed():
 	peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_PUBLIC)
@@ -22,6 +24,7 @@ func _on_host_pressed():
 	$Host.hide()
 	$LobbyContainer/Lobbies.hide()
 	$Refresh.hide()
+	print("_on_host_pressed")
 
 func join_lobby(id):
 	peer.connect_lobby(id)
@@ -30,6 +33,7 @@ func join_lobby(id):
 	$Host.hide()
 	$LobbyContainer/Lobbies.hide()
 	$Refresh.hide()
+	print("join_lobby")
 
 func _on_lobby_created(connect, id):
 	if connect:
@@ -37,10 +41,12 @@ func _on_lobby_created(connect, id):
 		Steam.setLobbyData(lobby_id, "Name", str(Steam.getPersonaName()+ "'s Lobby"))
 		Steam.setLobbyJoinable(lobby_id, true)
 		print(lobby_id)
+	print("_on_lobby_created")
 
 func open_lobby_list():
 	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 	Steam.requestLobbyList()
+	print("open_lobby_list")
 
 func _on_lobby_match_list(lobbies):
 	
@@ -54,9 +60,11 @@ func _on_lobby_match_list(lobbies):
 		but.connect("pressed", Callable(self, "join_lobby").bind(lobby))
 		
 		$LobbyContainer/Lobbies.add_child(but)
+	print("_on_lobby_match_list")
 
 
 func _on_refresh_pressed():
 	if $LobbyContainer/Lobbies.get_child_count() > 0:
 		for n in $LobbyContainer/Lobbies.get_children():
 			n.queue_free()
+	print("_on_refresh_pressed")
