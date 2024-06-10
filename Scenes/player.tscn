@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://df0xn0ad1cgpb"]
+[gd_scene load_steps=8 format=3 uid="uid://df0xn0ad1cgpb"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_rgm03"]
 
@@ -22,7 +22,10 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b8ft1"]
+
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
@@ -47,7 +50,7 @@ mesh = SubResource("BoxMesh_ctomc")
 skeleton = NodePath("../..")
 
 [node name="Tip" type="Node3D" parent="Head/Weapon"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.130632)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.128392)
 
 [node name="WeaponRayCast3D" type="RayCast3D" parent="Head/Weapon/Tip"]
 target_position = Vector3(0, 0, -50)
@@ -65,6 +68,11 @@ target_position = Vector3(0, 0.4, 0)
 replication_config = SubResource("SceneReplicationConfig_qtohj")
 
 [node name="ShootCD" type="Timer" parent="."]
+wait_time = 0.1
 one_shot = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.9, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_b8ft1")
 
 [connection signal="timeout" from="ShootCD" to="." method="_on_shoot_cd_timeout"]
