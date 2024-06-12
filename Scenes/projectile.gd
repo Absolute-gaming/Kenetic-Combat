@@ -5,6 +5,7 @@ extends RigidBody3D
 @export var knockback_force : float  = 10.0
 
 var force_direction
+@onready var projectile_ray_cast_3d = $ProjectileRayCast3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,3 +20,8 @@ func _process(delta):
 	if time_alive > 10:
 		queue_free()
 	time_alive += delta
+	if projectile_ray_cast_3d.is_colliding():
+		queue_free()
+	
+func _physics_process(delta):
+	$".".look_at(global_position + linear_velocity, Vector3.UP)
